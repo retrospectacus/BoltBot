@@ -1,6 +1,6 @@
 package com.discordbolt.boltbot.system.twitch;
 
-import com.discordbolt.boltbot.system.twitch.objects.TwitchAccessToken;
+import com.discordbolt.boltbot.system.twitch.json.TwitchAccessToken;
 import com.discordbolt.boltbot.utils.Logger;
 import com.discordbolt.boltbot.utils.PropertiesUtil;
 import com.google.gson.Gson;

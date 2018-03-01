@@ -1,7 +1,6 @@
 package com.discordbolt.boltbot.system.twitch;
 
-
-import com.discordbolt.boltbot.system.twitch.objects.TwitchClipData;
+import com.discordbolt.boltbot.system.twitch.json.TwitchClipData;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;

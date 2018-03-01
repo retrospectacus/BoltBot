@@ -1,4 +1,4 @@
-package com.discordbolt.boltbot.system.twitch.objects;
+package com.discordbolt.boltbot.system.twitch.json;
 
 import com.google.gson.annotations.SerializedName;
 

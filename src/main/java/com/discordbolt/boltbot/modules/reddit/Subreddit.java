@@ -40,7 +40,7 @@ public class Subreddit {
      *
      * @param subredditName Subreddit string to fetch posts of. No formatting.
      * @param sortMethod    How you want reddit to sort the returned posts
-     * @return List of raw reddit objects
+     * @return List of raw reddit json
      * @throws IOException If response fails or other IOException occurs
      */
     public static PostList getPosts(String subredditName, SortMethod sortMethod) throws IOException {

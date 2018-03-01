@@ -1,7 +1,7 @@
 package com.discordbolt.boltbot.system.twitch;
 
-import com.discordbolt.boltbot.system.twitch.objects.TwitchUserData;
-import com.discordbolt.boltbot.system.twitch.objects.TwitchUserDataResponse;
+import com.discordbolt.boltbot.system.twitch.json.TwitchUserData;
+import com.discordbolt.boltbot.system.twitch.json.TwitchUserDataResponse;
 import com.discordbolt.boltbot.utils.Logger;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
