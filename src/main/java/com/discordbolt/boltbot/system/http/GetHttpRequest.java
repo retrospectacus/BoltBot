@@ -1,10 +1,13 @@
 package com.discordbolt.boltbot.system.http;
 
-public class GetHttpRequest extends HttpRequest {
+import java.net.URISyntaxException;
 
-    protected static abstract class Init<T extends Init<T>> extends HttpRequest.Init<T> {
-        public Init() {
-            request.GET();
+public class GetHttpRequest extends HttpClientRequest {
+
+    protected static abstract class Init<T extends Init<T>> extends HttpClientRequest.Init<T> {
+
+        public GetHttpRequest build() throws URISyntaxException {
+            return new GetHttpRequest(this);
         }
     }
 
@@ -15,7 +18,8 @@ public class GetHttpRequest extends HttpRequest {
         }
     }
 
-    protected GetHttpRequest(Init<?> init) {
+    protected GetHttpRequest(Init<?> init) throws URISyntaxException {
         super(init);
+        requestBuilder.GET();
     }
 }

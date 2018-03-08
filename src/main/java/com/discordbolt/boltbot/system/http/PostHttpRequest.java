@@ -1,28 +1,21 @@
 package com.discordbolt.boltbot.system.http;
 
-import jdk.incubator.http.HttpResponse;
+import jdk.incubator.http.HttpRequest;
 
-public class PostHttpRequest extends HttpRequest {
+import java.net.URISyntaxException;
 
-    protected static abstract class Init<T extends Init<T>> extends HttpRequest.Init<T> {
+public class PostHttpRequest extends HttpClientRequest {
 
-        public Init() {
-            request.POST(null);
-        }
-
-        public T withBody(jdk.incubator.http.HttpRequest.BodyProcessor body) {
-            request.POST(body);
-            return self();
-        }
+    protected static abstract class Init<T extends Init<T>> extends HttpClientRequest.Init<T> {
+        private String body;
 
         public T withBody(String body) {
-            request.POST(jdk.incubator.http.HttpRequest.BodyProcessor.fromString(body));
+            this.body = body;
             return self();
         }
 
-        @Override
-        public HttpResponse<String> makeRequest() {
-            return null;
+        public PostHttpRequest build() throws URISyntaxException {
+            return new PostHttpRequest(this);
         }
     }
 
@@ -33,7 +26,8 @@ public class PostHttpRequest extends HttpRequest {
         }
     }
 
-    protected PostHttpRequest(Init<?> init) {
+    protected PostHttpRequest(Init<?> init) throws URISyntaxException {
         super(init);
+        requestBuilder.POST(HttpRequest.BodyProcessor.fromString(init.body));
     }
 }
