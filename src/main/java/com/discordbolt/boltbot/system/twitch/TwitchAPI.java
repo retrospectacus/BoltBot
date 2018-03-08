@@ -5,6 +5,8 @@ import com.discordbolt.boltbot.utils.Logger;
 import com.discordbolt.boltbot.utils.PropertiesUtil;
 import com.google.gson.Gson;
 import okhttp3.*;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -126,8 +128,8 @@ public class TwitchAPI {
         return refreshToken;
     }
 
-    public String getAuthHeader() {
-        return "Bearer " + getAccessToken();
+    public NameValuePair getAuthHeader() {
+        return new BasicNameValuePair("Authorization", "Bearer " + getAccessToken());
     }
 
     public OkHttpClient getClient() {
