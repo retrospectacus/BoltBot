@@ -23,7 +23,10 @@ public class TwitchClip {
         if (userID == null)
             throw new IllegalArgumentException(username + " does not exist!");
         HttpUrl clipURL = HttpUrl.parse(CLIP_EDIT_URL).newBuilder().addQueryParameter("broadcaster_id", userID).build();
-        Request request = new Request.Builder().post(RequestBody.create(null, new byte[0])).url(clipURL).addHeader("Authorization", api.getAuthHeader()).build();
+        Request request = new Request.Builder().post(RequestBody.create(null, new byte[0]))
+                                               .url(clipURL)
+                                               .addHeader("Authorization", api.getAuthHeader().getValue())
+                                               .build();
         try (Response response = api.getClient().newCall(request).execute()) {
             if (response.code() == TwitchAPI.UNAUTHORIZED_RESPONSE_CODE) {
                 try {

@@ -26,7 +26,7 @@ public class PostHttpRequest extends HttpClientRequest {
         }
     }
 
-    protected PostHttpRequest(Init<?> init) throws URISyntaxException {
+    PostHttpRequest(Init<?> init) throws URISyntaxException {
         super(init);
         requestBuilder.POST(HttpRequest.BodyProcessor.fromString(init.body));
     }

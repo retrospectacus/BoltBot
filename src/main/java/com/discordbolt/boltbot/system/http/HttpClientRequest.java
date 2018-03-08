@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-abstract class HttpClientRequest {
+class HttpClientRequest {
 
     private static final HttpClient universalClient = HttpClient.newHttpClient();
 
     private HttpClient client;
-    protected HttpRequest.Builder requestBuilder = HttpRequest.newBuilder();
-    ;
+    HttpRequest.Builder requestBuilder = HttpRequest.newBuilder();
 
     protected static abstract class Init<T extends Init<T>> {
 
@@ -58,10 +57,6 @@ abstract class HttpClientRequest {
             this.headers.addAll(headers);
             return self();
         }
-
-        public HttpClientRequest build() throws URISyntaxException {
-            return new HttpClientRequest(this); // Does not work because HttpClientRequest is abstract
-        }
     }
 
     public static class Builder extends Init<Builder> {
@@ -71,7 +66,7 @@ abstract class HttpClientRequest {
         }
     }
 
-    protected HttpClientRequest(Init<?> init) throws URISyntaxException {
+    HttpClientRequest(Init<?> init) throws URISyntaxException {
         client = init.usePrivateClient ? HttpClient.newHttpClient() : universalClient;
 
         requestBuilder.uri(new URIBuilder(init.url).addParameters(init.parameters).build());
