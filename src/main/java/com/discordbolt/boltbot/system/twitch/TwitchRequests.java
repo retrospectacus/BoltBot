@@ -31,19 +31,14 @@ public class TwitchRequests {
         return BASE_URL + API_VERSION_OLD;
     }
 
-    public static void main(String[] args) throws Exception {
-        testREST();
-    }
-
-    public static void testREST() throws Exception {
-        // Test GET
+    public static String getUserID(String user) throws Exception {
         HttpResponse<String> response = new GetHttpRequest.Builder().withURL(getApiVersionOld() + "users")
-                                                                    .addParameters(new BasicNameValuePair("login", "techtony96"))
+                                                                    .addParameters(new BasicNameValuePair("login", user))
                                                                     .addHeaders(new BasicNameValuePair("Accept", "application/vnd.twitchtv.v5+json"))
-                                                                    .addHeaders(authHeader)
+                                                                    .addHeaders()
                                                                     .build()
                                                                     .makeRequest();
 
-        System.out.println(response.body());
+        return response.body();
     }
 }
