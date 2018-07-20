@@ -55,6 +55,8 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Stage:Deploy'
+        sh './gradlew jib'
+        sh 'docker image ls'
       }
     }
   }

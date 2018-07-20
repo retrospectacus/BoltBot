@@ -15,9 +15,13 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+    id 'com.google.cloud.tools.jib' version '0.9.6'
+}
+
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -80,3 +84,15 @@ classes {
     dependsOn defineVersion
 }
 
+jib {
+    from {
+        //image = 'openjdk:10-jre'
+    }
+    to {
+        image = "boltbot:$boltBotVersion"
+    }
+    container {
+        jvmFlags = ['-Xms512m', '-Xmx512m']
+        mainClass = 'com.discordbolt.boltbot.BoltBot'
+    }
+}
