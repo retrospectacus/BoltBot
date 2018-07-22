@@ -75,7 +75,7 @@ task defineProperties(dependsOn: processResources) {
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
-            p['discord.token'] = "$discord.token"
+            p['discord.token'] = discord.token
             p.store w, null
         }
     }
@@ -96,8 +96,8 @@ jib {
     to {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
-            username = "$docker.user"
-            password = "$docker.password"
+            username = docker.user
+            password = docker.password
         }
     }
     container {
