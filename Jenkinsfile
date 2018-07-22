@@ -31,7 +31,7 @@ pipeline {
         echo 'Stage:Build'
         withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
         sh '''
-          gradle build -x test -pdiscordToken="$TOKEN"
+          gradle build -x test -PDISCORD_TOKEN="$TOKEN"
          '''
         }
       }
@@ -60,7 +60,7 @@ pipeline {
         echo 'Stage:Deploy'
         withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh '''
-            gradle jib -PdockerUser="$USERNAME" -pdockerPass="$PASSWORD"
+            gradle jib -PDOCKER_USER="$USERNAME" -PDOCKER_PASS="$PASSWORD"
           '''
         }
         sh 'docker image ls'
