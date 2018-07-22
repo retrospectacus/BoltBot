@@ -75,7 +75,7 @@ task defineProperties(dependsOn: processResources) {
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
-            p['discord.token'] = System.getProperty("DISCORD_TOKEN")
+            p['discord.token'] = "$DISCORD_TOKEN"
             p.store w, null
         }
     }
@@ -92,8 +92,8 @@ jib {
     to {
         image = "techtony96/boltbot:$boltBotVersion"
         auth {
-            username = System.getProperty("DOCKER_USER")
-            password = System.getProperty("DOCKER_PASS")
+            username = "$DOCKER_USER"
+            password = "$DOCKER_PASS"
         }
     }
     container {
