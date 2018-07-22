@@ -31,7 +31,7 @@ pipeline {
         echo 'Stage:Build'
         withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
         sh '''
-          gradle build -x test -Pdiscord.token="$TOKEN" --stacktrace
+          gradle build -x test -Pdiscord.token="$TOKEN" -Pdocker.user="" -Pdocker.password=""
          '''
         }
       }
