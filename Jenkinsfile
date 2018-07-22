@@ -15,10 +15,10 @@ def isPRMergeBuild() {
 pipeline {
   agent {
     docker {
-      image 'gradle:4.8-jdk8-alpine'
+      image 'gradle:4.9-jdk10'
     }
-
   }
+
   stages {
     stage('Checkout') {
       steps {
@@ -29,14 +29,13 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Stage:Build'
-        sh 'chmod +x gradlew'
-        sh './gradlew build -x test'
+        sh 'gradle build -x test'
       }
     }
     stage('Test') {
       steps {
         echo 'Stage:Test'
-        sh './gradlew test'
+        sh 'gradle test'
       }
     }
     stage('Check') {
@@ -55,7 +54,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Stage:Deploy'
-        sh './gradlew jib'
+        sh 'gradle jib'
         sh 'docker image ls'
       }
     }

@@ -25,6 +25,11 @@ artifacts/
 *.ipr
 out/
 
+# Gradle Directory
+.gradle/
+gradlew
+gradlew.bat
+
 # Build folder
 build/
 
