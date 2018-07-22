@@ -75,6 +75,8 @@ task defineProperties(dependsOn: processResources) {
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
+            printf "TOKEN="
+            printf discord.token
             p['discord.token'] = discord.token
             p.store w, null
         }
