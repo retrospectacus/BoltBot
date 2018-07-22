@@ -31,7 +31,7 @@ pipeline {
         echo 'Stage:Build'
         withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
         sh '''
-          gradle build -x test -PDISCORD_TOKEN="$TOKEN"
+          gradle build -x test -PDISCORD_TOKEN="$TOKEN" --stacktrace
          '''
         }
       }
