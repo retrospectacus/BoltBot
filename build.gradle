@@ -75,10 +75,14 @@ task defineProperties(dependsOn: processResources) {
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
-            p['discord.token'] = "$DISCORD_TOKEN"
+            p['discord.token'] = "$discord.token"
             p.store w, null
         }
     }
+}
+
+def getCommitHash() {
+    'git rev-parse --verify --short HEAD'.execute().text.trim()
 }
 
 classes {
@@ -90,10 +94,10 @@ jib {
         image = 'openjdk:10-jre'
     }
     to {
-        image = "techtony96/boltbot:$boltBotVersion"
+        image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
-            username = "$DOCKER_USER"
-            password = "$DOCKER_PASS"
+            username = "$docker.user"
+            password = "$docker.password"
         }
     }
     container {
