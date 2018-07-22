@@ -23,7 +23,7 @@ pipeline {
     stage('Checkout') {
       steps {
         echo 'Stage:Checkout'
-        git 'https://github.com/DiscordBolt/BoltBot'
+        //git 'https://github.com/DiscordBolt/BoltBot'
       }
     }
     stage('Build') {
