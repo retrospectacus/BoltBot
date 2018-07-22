@@ -69,27 +69,32 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
 }
 
-task defineVersion(dependsOn: processResources) {
+task defineProperties(dependsOn: processResources) {
     doLast {
         file("$buildDir/resources/main/application.properties").withWriter { w ->
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
+            p['discord.token'] = file('/run/secrets/discord_token.txt').text.trim()
             p.store w, null
         }
     }
 }
 
 classes {
-    dependsOn defineVersion
+    dependsOn defineProperties
 }
 
 jib {
     from {
-        //image = 'openjdk:10-jre'
+        image = 'openjdk:10-jre'
     }
     to {
-        image = "boltbot:$boltBotVersion"
+        image = "techtony96/boltbot:$boltBotVersion"
+        auth {
+            username = file('/run/secrets/docker_username.txt').text.trim()
+            password = file('/run/secrets/docker_password.txt').text.trim()
+        }
     }
     container {
         jvmFlags = ['-Xms512m', '-Xmx512m']
