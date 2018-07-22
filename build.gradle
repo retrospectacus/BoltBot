@@ -75,7 +75,7 @@ task defineProperties(dependsOn: processResources) {
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
-            echo System.getProperty("DISCORD_TOKEN")
+            println System.getProperty("DISCORD_TOKEN")
             p['discord.token'] = "test"
             p.store w, null
         }
