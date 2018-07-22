@@ -29,7 +29,12 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Stage:Build'
-        sh 'gradle build -x test'
+        withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
+        sh '''
+          set +x
+          gradle build -x test -pdiscordToken="$TOKEN"
+         '''
+        }
       }
     }
     stage('Test') {
@@ -54,7 +59,12 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Stage:Deploy'
-        sh 'gradle jib'
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          sh '''
+            set +x
+            gradle jib -PdockerUser="$USERNAME" -pdockerPass="$PASSWORD"
+          '''
+        }
         sh 'docker image ls'
       }
     }
