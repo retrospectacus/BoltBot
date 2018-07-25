@@ -32,7 +32,7 @@ pipeline {
       }
       steps {
         echo 'Stage:Build'
-        sh gradle build -x test
+        sh 'gradle build -x test'
       }
     }
     stage('Test') {
@@ -60,7 +60,7 @@ pipeline {
       }
       steps {
         echo 'Stage:Deploy'
-        gradle jib
+        sh 'gradle jib'
         sh 'docker image ls'
       }
     }
