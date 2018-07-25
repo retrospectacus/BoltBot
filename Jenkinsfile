@@ -27,10 +27,8 @@ pipeline {
       }
     }
     stage('Build') {
-      withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
-        environment {
-            DISCORD_TOKEN = "$TOKEN"
-        }
+      environment {
+        DISCORD_TOKEN = credentials('discordToken');
       }
       steps {
         echo 'Stage:Build'
@@ -57,11 +55,8 @@ pipeline {
       }
     }
     stage('Deploy') {
-      withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        environment {
-          DOCKER_USERNAME = "$USERNAME"
-          DOCKER_PASSWORD = "$PASSWORD"
-        }
+      environment {
+        DOCKER = credentials('dockerHub')
       }
       steps {
         echo 'Stage:Deploy'
