@@ -27,13 +27,14 @@ pipeline {
       }
     }
     stage('Build') {
+      withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
+        environment {
+            DISCORD_TOKEN = "$TOKEN"
+        }
+      }
       steps {
         echo 'Stage:Build'
-        withCredentials([string(credentialsId: 'discordToken', variable: 'TOKEN')]) {
-        sh '''
-          gradle build -x test -Ptoken="$TOKEN" -PdockerUser="" -PdockerPass=""
-         '''
-        }
+        sh gradle build -x test
       }
     }
     stage('Test') {
@@ -56,13 +57,15 @@ pipeline {
       }
     }
     stage('Deploy') {
+      withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        environment {
+          DOCKER_USERNAME = "$USERNAME"
+          DOCKER_PASSWORD = "$PASSWORD"
+        }
+      }
       steps {
         echo 'Stage:Deploy'
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-          sh '''
-            gradle jib -Ptoken="" -PdockerUser="$USERNAME" -PdockerPass="$PASSWORD"
-          '''
-        }
+        gradle jib
         sh 'docker image ls'
       }
     }

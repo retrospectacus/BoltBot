@@ -19,7 +19,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'eclipse'
-    id 'com.google.cloud.tools.jib' version '0.9.6'
+    id 'com.google.cloud.tools.jib' version '0.9.7'
 }
 
 apply plugin: 'org.springframework.boot'
@@ -75,9 +75,7 @@ task defineProperties(dependsOn: processResources) {
             Properties p = new Properties()
             p.load(new FileInputStream(new File('src/main/resources/application.properties')))
             p['boltbot.version'] = project.version.toString()
-            printf "TOKEN="
-            printf token
-            p['discord.token'] = token
+            p['discord.token'] = System.getEnv("DISCORD_TOKEN")
             p.store w, null
         }
     }
@@ -98,8 +96,8 @@ jib {
     to {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
-            username = dockerUser
-            password = dockerPass
+            username = System.getEnv("DOCKER_USERNAME")
+            password = System.getEnv("DOCKER_PASSWORD")
         }
     }
     container {
