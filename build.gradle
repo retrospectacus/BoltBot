@@ -95,14 +95,14 @@ jib {
         image = 'openjdk:10-jre'
         auth {
             username = "techtony96"
-            password = "BMUr6CeiaC$G!X@9"
+            password = 'BMUr6CeiaC$G!X@9'
         }
     }
     to {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
             username = "techtony96"
-            password = "BMUr6CeiaC$G!X@9"
+            password = 'BMUr6CeiaC$G!X@9'
         }
     }
     container {
