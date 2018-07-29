@@ -94,7 +94,7 @@ jib {
         image = 'openjdk:10-jre'
         auth {
             username = "techtony96"
-            password = System.getenv("dockerPassword")
+            password = System.getenv("DOCKER_PASSWORD")
         }
     }
     to {

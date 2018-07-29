@@ -56,7 +56,7 @@ pipeline {
     }
     stage('Deploy') {
       environment {
-        DOCKER = credentials('dockerHub')
+        DOCKER_PASSWORD = credentials('dockerPassword')
       }
       steps {
         echo 'Stage:Deploy'
