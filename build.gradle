@@ -92,6 +92,10 @@ classes {
 jib {
     from {
         image = 'openjdk:10-jre'
+        auth {
+            username = System.getenv("DOCKER_USR")
+            password = System.getenv("DOCKER_PSW")
+        }
     }
     to {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
