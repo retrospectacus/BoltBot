@@ -29,7 +29,6 @@ pipeline {
     stage('Build') {
       environment {
         DISCORD_TOKEN = credentials('discordToken');
-        DOCKER_PASSWORD = credentials('dockerPassword');
       }
       steps {
         echo 'Stage:Build'
@@ -61,9 +60,7 @@ pipeline {
       }
       steps {
         echo 'Stage:Deploy'
-        sh 'printenv'
-        sh 'gradle jib --stacktrace'
-        sh 'docker image ls'
+        sh 'gradle jib'
       }
     }
   }
