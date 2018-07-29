@@ -61,7 +61,7 @@ pipeline {
       steps {
         echo 'Stage:Deploy'
         sh 'printenv'
-        sh 'gradle jib'
+        sh 'gradle jib --stacktrace'
         sh 'docker image ls'
       }
     }
