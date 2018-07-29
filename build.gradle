@@ -93,15 +93,15 @@ jib {
     from {
         image = 'openjdk:10-jre'
         auth {
-            username = "$System.env.DOCKER_USR"
-            password = "$System.env.DOCKER_PSW"
+            username = "techtony96"
+            password = System.getenv("dockerPassword")
         }
     }
     to {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
-            username = "$System.env.DOCKER_USR"
-            password = "$System.env.DOCKER_PSW"
+            username = "techtony96"
+            password = System.getenv("dockerPassword")
         }
     }
     container {
