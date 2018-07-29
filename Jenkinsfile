@@ -29,6 +29,7 @@ pipeline {
     stage('Build') {
       environment {
         DISCORD_TOKEN = credentials('discordToken');
+        JENKINS_TONY = credentials('jenkinsTony');
       }
       steps {
         echo 'Stage:Build'
