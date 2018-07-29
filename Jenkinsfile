@@ -29,6 +29,7 @@ pipeline {
     stage('Build') {
       environment {
         DISCORD_TOKEN = credentials('discordToken');
+        DOCKER_PASSWORD = credentials('dockerPassword');
       }
       steps {
         echo 'Stage:Build'
@@ -56,7 +57,7 @@ pipeline {
     }
     stage('Deploy') {
       environment {
-        DOCKER_PASSWORD = credentials('dockerPassword')
+        DOCKER_PASSWORD = credentials('dockerPassword');
       }
       steps {
         echo 'Stage:Deploy'
