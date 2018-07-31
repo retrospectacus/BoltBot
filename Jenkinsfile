@@ -60,7 +60,7 @@ pipeline {
       }
       steps {
         echo 'Stage:Deploy'
-        sh 'gradle jib'
+        sh 'gradle jib --info --stacktrace'
       }
     }
   }
