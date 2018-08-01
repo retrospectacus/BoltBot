@@ -90,9 +90,6 @@ classes {
 }
 
 jib {
-    doFirst {
-        println "Docker Password = " + System.getenv('DOCKER_PASSWORD')
-    }
     from {
         image = 'openjdk:10-jre'
     }
@@ -107,4 +104,8 @@ jib {
         jvmFlags = ['-Xms512m', '-Xmx512m']
         mainClass = 'com.discordbolt.boltbot.BoltBot'
     }
+}
+
+tasks.jib.doFirst {
+    println "Docker Password = " + System.getenv('DOCKER_PASSWORD')
 }
