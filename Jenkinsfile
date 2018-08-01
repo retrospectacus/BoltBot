@@ -26,7 +26,9 @@ pipeline {
             }
             steps {
                 echo 'Stage:Build'
-                sh 'gradle build -x test'
+                withCredentials([string(credentialsId: 'discordToken', variable: 'token')]) {
+                    sh "gradle build -x test -PDiscordToken=${token}"
+                }
                 archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
             }
         }
@@ -51,8 +53,8 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when { 
-                branch 'master' 
+            when {
+                branch 'master'
             }
             steps {
                 echo 'Stage:Deploy'
@@ -60,7 +62,6 @@ pipeline {
                     sh "gradle jib -PDockerPassword=${password}"
                 }
             }
-        }   
-        
+        }
     }
 }
