@@ -27,12 +27,14 @@ pipeline {
             steps {
                 echo 'Stage:Build'
                 sh 'gradle build -x test'
+                archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
             }
         }
         stage('Test') {
             steps {
                 echo 'Stage:Test'
                 sh 'gradle test'
+                junit 'build/test-results/**/*.xml'
             }
         }
         stage('Check') {
@@ -60,11 +62,5 @@ pipeline {
             }
         }   
         
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-            junit 'build/test-results/**/*.xml'
-        }
     }
 }
