@@ -97,7 +97,7 @@ jib {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
             username = 'techtony96'
-            password = null
+            password = "$DockerPassword"
         }
     }
     container {
