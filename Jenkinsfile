@@ -56,11 +56,13 @@ pipeline {
     }
     stage('Deploy') {
       environment {
-        DOCKER_PASSWORD = credentials('dockerPassword');
+        DOCKER_PASSWORD = credentials('');
       }
       steps {
         echo 'Stage:Deploy'
-        sh 'gradle jib --info --stacktrace'
+        withCredentials([string(credentialsId: 'dockerPassword', variable: 'password')]) {
+          sh "gradle jib -PDockerPassword=${password}"
+        }
       }
     }
   }
