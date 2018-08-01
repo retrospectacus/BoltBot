@@ -97,7 +97,7 @@ jib {
         image = "techtony96/boltbot:$boltBotVersion-" + getCommitHash()
         auth {
             username = 'techtony96'
-            password = "$DockerPassword"
+            password = project.DockerPassword
         }
     }
     container {
@@ -106,6 +106,6 @@ jib {
     }
 }
 
-tasks.jib.doFirst {
-    println "Docker Password = '$DockerPassword'"
-}
+//tasks.jib.doFirst {
+//   println "Docker Password = '$DockerPassword'"
+//}
