@@ -48,16 +48,18 @@ pipeline {
                 }
             }
         }
-        if(env.BRANCH_NAME == 'master') {
-            stage('Deploy') {
-                steps {
-                    echo 'Stage:Deploy'
-                    withCredentials([string(credentialsId: 'dockerPassword', variable: 'password')]) {
-                        sh "gradle jib -PDockerPassword=${password}"
-                    }
+        stage('Deploy') {
+            when { 
+                branch 'master' 
+            }
+            steps {
+                echo 'Stage:Deploy'
+                withCredentials([string(credentialsId: 'dockerPassword', variable: 'password')]) {
+                    sh "gradle jib -PDockerPassword=${password}"
                 }
-            }   
-        }
+            }
+        }   
+        
     }
     post {
         always {
