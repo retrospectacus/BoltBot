@@ -45,7 +45,7 @@ pipeline {
                     def warnings = tm('$CHECKSTYLE_COUNT').toInteger();
                     def warnings_new = tm('$CHECKSTYLE_NEW').toInteger();
                     if (warnings > 0) {
-                        setBuildStatus("This commit has " + warnings + " checkstyle warnings. (" + warnings_new + " new)", "FAILURE", "continuous-integration/jenkins/checkstyle");
+                        setBuildStatus('This commit has ' + warnings + ' checkstyle warnings. (' + warnings_new + ' new)', 'FAILURE', 'continuous-integration/jenkins/checkstyle');
                     }
                 }
             }
