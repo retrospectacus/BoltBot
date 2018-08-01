@@ -20,12 +20,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Stage:Checkout'
-                //git 'https://github.com/DiscordBolt/BoltBot'
-            }
-        }
         stage('Build') {
             environment {
                 DISCORD_TOKEN = credentials('discordToken');
