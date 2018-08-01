@@ -105,7 +105,3 @@ jib {
         mainClass = 'com.discordbolt.boltbot.BoltBot'
     }
 }
-
-//tasks.jib.doFirst {
-//   println "Docker Password = '$DockerPassword'"
-//}
