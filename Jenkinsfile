@@ -55,9 +55,6 @@ pipeline {
       }
     }
     stage('Deploy') {
-      environment {
-        DOCKER_PASSWORD = credentials('');
-      }
       steps {
         echo 'Stage:Deploy'
         withCredentials([string(credentialsId: 'dockerPassword', variable: 'password')]) {
