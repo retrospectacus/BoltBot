@@ -70,9 +70,10 @@ pipeline {
                 def titleURL = "${RUN_DISPLAY_URL}"
                 def shortCommit = "${GIT_COMMIT}".substring(0, 7)
                 def repoURL =  "${GIT_URL}".replace(".git", "")
+                def branchURL = repoURL + '/' + ${GIT_BRANCH}
                 def commitURL = repoURL + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
-                def footerText = 'Build completed in ' + currentBuild.durationString;
+                def footerText = 'Build completed in ' + currentBuild.durationString.replace(' and counting', '');
                 def now = new Date()
                 def timestamp = now.format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", TimeZone.getTimeZone('UTC'))
                 def body = """
@@ -85,7 +86,7 @@ pipeline {
                           "url": "${titleURL}"
                         },
                         "title": "[BoltBot/v3]",
-                        "url": "${repoURL}",
+                        "url": "${branchURL}",
                         "description": "[`${shortCommit}`](${commitURL})",
                         "timestamp": "${timestamp}",
                         "footer": {
