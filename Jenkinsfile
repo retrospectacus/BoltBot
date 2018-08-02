@@ -85,7 +85,7 @@ pipeline {
                           "url": "${titleURL}"
                         },
                         "title": "[BoltBot/v3]",
-                        "url": "${commitURL}",
+                        "url": "${repoURL}",
                         "description": "[`${shortCommit}`](${commitURL})",
                         "timestamp": "${timestamp}",
                         "footer": {
