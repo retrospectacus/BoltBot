@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                branch 'master'
+                branch 'v3'
             }
             steps {
                 withCredentials([string(credentialsId: 'dockerPassword', variable: 'password')]) {
