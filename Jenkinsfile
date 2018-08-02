@@ -72,7 +72,7 @@ pipeline {
                 def branchURL = "${repoURL}/tree/${GIT_BRANCH}"
                 def commitURL = "${repoURL}/commit/${GIT_COMMIT}"
                 def shortCommit = "${GIT_COMMIT}".substring(0, 7)
-                def commitDescription = "[`${shortCommit}`](${commitURL})"
+                def commitDescription = "Commit: [`${shortCommit}`](${commitURL})"
                 def buildTime = "Build completed in ${currentBuild.durationString}".replace(' and counting', '')
                 def timestamp = new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", TimeZone.getTimeZone('UTC'))
                 def body = """
@@ -84,7 +84,7 @@ pipeline {
                           "name": "${buildStatus}",
                           "url": "${buildURL}"
                         },
-                        "title": "[${projectBranch}]",
+                        "title": "${projectBranch}",
                         "url": "${branchURL}",
                         "description": "${commitDescription}",
                         "footer": {
