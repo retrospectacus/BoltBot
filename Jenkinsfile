@@ -77,11 +77,8 @@ pipeline {
                 def shortCommit = "{GIT_COMMIT}".substring(0, 7)
                 def commitURL = "${GIT_URL}".replace(".git", "") + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
-                def footerText = 'Build took ' + currentBuild.durationString;
-
-                withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
-                    def post = new URL("${url}").openConnection();
-                    def message = '{                                \
+                def footerText = 'Build completed in ' + currentBuild.durationString;
+                def embed = '{                                      \
                     "embeds": [                                     \
                         {                                           \
                             "color": '+color+',                     \
@@ -95,12 +92,14 @@ pipeline {
                                 "text": "'+footerText+'"            \
                             }                                       \
                         }                                           \
-                    }'
-                    post.setRequestMethod("POST")
-                    post.setDoOutput(true)
-                    post.setRequestProperty("Content-Type", "application/json")
-                    post.getOutputStream().write(message.getBytes("UTF-8"));
+                    ]'
                 }
+            }
+
+            withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
+                def response = httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${embed}"
+                println("Status: " + response.status)
+                println("Content: " + response.content)
             }
         }
     }
