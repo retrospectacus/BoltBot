@@ -74,7 +74,7 @@ pipeline {
                 def authorName = 'Build #' + currentBuild.number + ' ' + RESULT_MAP[currentBuild.currentResult]
                 def title = "[${JOB_NAME}]"
                 def titleURL = "${RUN_DISPLAY_URL}"
-                def shortCommit = "{GIT_COMMIT}".substring(0, 7)
+                def shortCommit = "${GIT_COMMIT}".substring(0, 7)
                 def commitURL = "${GIT_URL}".replace(".git", "") + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
                 def footerText = 'Build completed in ' + currentBuild.durationString;
@@ -84,7 +84,7 @@ pipeline {
                   {
                     "embeds": [
                       {
-                        "color": "${color}",
+                        "color": ${color},
                         "author": {
                           "name": "${authorName}",
                           "url": "${titleURL}"
@@ -94,7 +94,7 @@ pipeline {
                         "description": "[`${shortCommit}`](${commitURL})",
                         "timestamp": "${timestamp}",
                         "footer": {
-                          "text": "Build took ${footerText}"
+                          "text": "${footerText}"
                         }
                       }
                     ]
