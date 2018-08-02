@@ -79,7 +79,7 @@ pipeline {
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
                 def footerText = 'Build completed in ' + currentBuild.durationString;
                 def now = new Date()
-                def timestamp = now.format("yyyyMMdd-HH:mm:ss.SSS", TimeZone.getTimeZone('UTC'))
+                def timestamp = now.format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z", TimeZone.getTimeZone('UTC'))
                 def embed = """
                   {
                     "embeds": [
