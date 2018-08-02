@@ -100,7 +100,7 @@ pipeline {
                     ]
                   }
                 """
-
+                println embed
                 withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
                     def response = httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${embed}"
                     println("Status: " + response.status)
