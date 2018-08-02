@@ -95,7 +95,6 @@ pipeline {
                     ]
                   }
                 """
-                println embed
                 withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
                     httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${body}"
                 }
