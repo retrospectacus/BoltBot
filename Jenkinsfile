@@ -73,8 +73,7 @@ pipeline {
                 def branchURL = repoURL + '/'
                 def commitURL = repoURL + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
-                def footerText = 'Build completed in ' + currentBuild.durationString
-                footerText = footerText.replace(' and counting', '')
+                def footerText = 'Build completed in ' + currentBuild.durationString.replace(' and counting', '')
                 def now = new Date()
                 def timestamp = now.format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", TimeZone.getTimeZone('UTC'))
                 def body = """
