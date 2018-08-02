@@ -25,23 +25,18 @@ pipeline {
                 DISCORD_TOKEN = credentials('discordToken');
             }
             steps {
-                echo 'Stage:Build'
-                withCredentials([string(credentialsId: 'discordToken', variable: 'token')]) {
-                    sh "gradle build -x test -PDiscordToken=${token}"
-                }
+                sh 'gradle build -x test'
                 archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
             }
         }
         stage('Test') {
             steps {
-                echo 'Stage:Test'
                 sh 'gradle test'
                 junit 'build/test-results/**/*.xml'
             }
         }
         stage('Check') {
             steps {
-                echo 'Stage:Check'
                 step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', pattern: '**/reports/checkstyle/main.xml'])
                 script {
                     def warnings = tm('$CHECKSTYLE_COUNT').toInteger();
@@ -57,7 +52,6 @@ pipeline {
                 branch 'master'
             }
             steps {
-                echo 'Stage:Deploy'
                 withCredentials([string(credentialsId: 'dockerPassword', variable: 'password')]) {
                     sh "gradle jib -PDockerPassword=${password}"
                 }
@@ -75,12 +69,13 @@ pipeline {
                 def title = "[${JOB_NAME}]"
                 def titleURL = "${RUN_DISPLAY_URL}"
                 def shortCommit = "${GIT_COMMIT}".substring(0, 7)
-                def commitURL = "${GIT_URL}".replace(".git", "") + '/commit/' + "${GIT_COMMIT}"
+                def repoURL =  "${GIT_URL}".replace(".git", "")
+                def commitURL = repoURL + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
                 def footerText = 'Build completed in ' + currentBuild.durationString;
                 def now = new Date()
                 def timestamp = now.format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", TimeZone.getTimeZone('UTC'))
-                def embed = """
+                def body = """
                   {
                     "embeds": [
                       {
@@ -102,9 +97,7 @@ pipeline {
                 """
                 println embed
                 withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
-                    def response = httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${embed}"
-                    println("Status: " + response.status)
-                    println("Content: " + response.content)
+                    httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${body}"
                 }
             }
         }
