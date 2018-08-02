@@ -70,7 +70,7 @@ pipeline {
                 def titleURL = "${RUN_DISPLAY_URL}"
                 def shortCommit = "${GIT_COMMIT}".substring(0, 7)
                 def repoURL =  "${GIT_URL}".replace(".git", "")
-                def branchURL = repoURL + '/' + ${GIT_BRANCH}
+                def branchURL = repoURL + '/'
                 def commitURL = repoURL + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
                 def footerText = 'Build completed in ' + currentBuild.durationString
