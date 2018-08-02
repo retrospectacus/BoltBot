@@ -78,28 +78,24 @@ pipeline {
                 def commitURL = "${GIT_URL}".replace(".git", "") + '/commit/' + "${GIT_COMMIT}"
                 def description = '[`' + shortCommit + '`](' + commitURL + ') - '
                 def footerText = 'Build completed in ' + currentBuild.durationString;
-                def embed = '{                                      \
-                    "embeds": [                                     \
-                        {                                           \
-                            "color": '+color+',                     \
-                            "author": {                             \
-                                "name": "'+authorName+'"            \
-                            },                                      \
-                            "title": '+title+',                     \
-                            "url": "'+titleURL+'",                  \
-                            "description": "'+description+'",       \
-                            "footer": {                             \
-                                "text": "'+footerText+'"            \
-                            }                                       \
-                        }                                           \
-                    ]'
-                }
-            }
+                def embed = '{ "embeds": [ {                \
+                    "color": '+color+',                     \
+                    "author": {                             \
+                        "name": "'+authorName+'"            \
+                    },                                      \
+                    "title": '+title+',                     \
+                    "url": "'+titleURL+'",                  \
+                    "description": "'+description+'",       \
+                    "footer": {                             \
+                        "text": "'+footerText+'"            \
+                    }                                       \
+                    } ] }'
 
-            withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
-                def response = httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${embed}"
-                println("Status: " + response.status)
-                println("Content: " + response.content)
+                withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
+                    def response = httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: "${embed}"
+                    println("Status: " + response.status)
+                    println("Content: " + response.content)
+                }
             }
         }
     }
