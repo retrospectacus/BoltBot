@@ -65,15 +65,15 @@ pipeline {
                 def RESULT_MAP = ['SUCCESS': 'Passed', 'UNSTABLE': 'Unstable', 'FAILURE': 'Failed', 'ABORTED': 'Aborted']
 
                 def color = COLOR_MAP[currentBuild.currentResult]
-                def authorName = "Build #${currentBuild.number} " + RESULT_MAP[currentBuild.currentResult]
-                def title = "[${JOB_NAME}]"
-                def titleURL = "${RUN_DISPLAY_URL}"
-                def shortCommit = "${GIT_COMMIT}".substring(0, 7)
+                def buildStatus = "Build #${currentBuild.number} " + RESULT_MAP[currentBuild.currentResult]
+                def buildURL = "${RUN_DISPLAY_URL}"
+                def projectBranch = "[${JOB_NAME}]"
                 def repoURL =  "${GIT_URL}".replace(".git", "")
                 def branchURL = "${repoURL}/tree/${GIT_BRANCH}"
                 def commitURL = "${repoURL}/commit/${GIT_COMMIT}"
-                def description = "[`${shortCommit}`](${commitURL})"
-                def footerText = "Build completed in ${currentBuild.durationString}".replace(' and counting', '')
+                def shortCommit = "${GIT_COMMIT}".substring(0, 7)
+                def commitDescription = "[`${shortCommit}`](${commitURL})"
+                def buildTime = "Build completed in ${currentBuild.durationString}".replace(' and counting', '')
                 def timestamp = new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", TimeZone.getTimeZone('UTC'))
                 def body = """
                   {
@@ -81,16 +81,16 @@ pipeline {
                       {
                         "color": ${color},
                         "author": {
-                          "name": "${authorName}",
-                          "url": "${titleURL}"
+                          "name": "${buildStatus}",
+                          "url": "${buildURL}"
                         },
-                        "title": "[BoltBot/v3]",
+                        "title": "[${projectBranch}]",
                         "url": "${branchURL}",
-                        "description": "[`${shortCommit}`](${commitURL})",
-                        "timestamp": "${timestamp}",
+                        "description": "${commitDescription}",
                         "footer": {
-                          "text": "${footerText}"
-                        }
+                          "text": "${buildTime}"
+                        },
+                        "timestamp": "${timestamp}"
                       }
                     ]
                   }
