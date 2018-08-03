@@ -75,7 +75,7 @@ pipeline {
                       {
                         "color": ${COLOR_MAP[currentBuild.currentResult]},
                         "author": {
-                          "name": "Build #${currentBuild.number} " + RESULT_MAP[currentBuild.currentResult],
+                          "name": "Build #${currentBuild.number} ${RESULT_MAP[currentBuild.currentResult]}",
                           "url": "${RUN_DISPLAY_URL}"
                         },
                         "title": "[${JOB_NAME}]",
