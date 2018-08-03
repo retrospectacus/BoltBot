@@ -92,7 +92,14 @@ pipeline {
     post {
         always {
             withCredentials([string(credentialsId: 'discordWebhook', variable: 'url')]) {
-                httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: buildDiscordEmbed()
+                script { // You must use a Scripted pipeline; no declarative.
+                    try {
+                        httpRequest url: "${url}", httpMode: 'POST', contentType: 'APPLICATION_JSON', requestBody: buildDiscordEmbed()
+                    }
+                    catch (Exception e) {
+                        sh 'true' // ??? untested
+                    }
+                }
             }
         }
     }
